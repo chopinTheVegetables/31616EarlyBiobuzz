@@ -4,6 +4,7 @@ import static org.firstinspires.ftc.teamcode.utils.robotConfig.lowerBlueHiveAim;
 import static org.firstinspires.ftc.teamcode.utils.robotConfig.lowerBlueRect;
 import static org.firstinspires.ftc.teamcode.utils.robotConfig.lowerRedHiveAim;
 import static org.firstinspires.ftc.teamcode.utils.robotConfig.lowerRedRect;
+import static org.firstinspires.ftc.teamcode.utils.robotConfig.upperBlueHiveAim;
 import static org.firstinspires.ftc.teamcode.utils.robotConfig.upperBlueRect;
 import static org.firstinspires.ftc.teamcode.utils.robotConfig.upperRedHiveAim;
 import static org.firstinspires.ftc.teamcode.utils.robotConfig.upperRedRect;
@@ -43,7 +44,7 @@ public class ShootingZone {
         if(this.alliance == robotConfig.Alliance.BLUE){
             upperRect = upperBlueRect;
             lowerRect = lowerBlueRect;
-            upperHive = upperRedHiveAim;
+            upperHive = upperBlueHiveAim;
             lowerHive = lowerBlueHiveAim;
         }else{//edge case
             upperRect = null;

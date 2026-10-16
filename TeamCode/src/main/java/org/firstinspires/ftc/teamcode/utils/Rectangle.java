@@ -7,6 +7,7 @@ public class Rectangle {
     Pose p2;
     Pose p3;
     Pose p4;
+
     public Rectangle(Pose p1, Pose p2, Pose p3, Pose p4){
         this.p1 = p1;
         this.p2 = p2;
@@ -26,7 +27,6 @@ public class Rectangle {
      */
     public double getHighestX(){
         return Math.max(Math.max(p1.x(),p2.x()), Math.max(p3.x(), p4.x()));
-
     }
     /**
      * gets the lowest Y value of the rectangle
@@ -34,7 +34,6 @@ public class Rectangle {
      */
     public double getLowestY(){
         return Math.min(Math.min(p1.y(),p2.y()), Math.min(p3.y(), p4.y()));
-
     }
 
     /**
@@ -54,5 +53,5 @@ public class Rectangle {
         return point.x() > getLowestX() && point.x() < getHighestX() &&
                 point.y() > getLowestY() && point.y() < getHighestY();
     }
-    
+
 }

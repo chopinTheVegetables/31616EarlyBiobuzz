@@ -12,7 +12,6 @@ public class robotConfig {
     public static final String turretRotName = "turret";
     public static int turretRotationDegrees = 270;
     public static double servoMultiplier = 1.0/turretRotationDegrees; //1 div by servo range (deg)
-
     //LL
     public static final String LLname = "limelight";
     public static final double LLtiltAngle = 30;

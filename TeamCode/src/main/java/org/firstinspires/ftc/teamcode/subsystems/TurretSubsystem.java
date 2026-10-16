@@ -26,6 +26,7 @@ public class TurretSubsystem {
         zoneDetector = new ShootingZone(follower, alliance);
         this.f = follower;
     }
+
     private double calculateAimAngle(){
         Pose currentPose = f.pose();//degrees
         Pose targetPose = zoneDetector.hiveAimingTargetBasedOnZones();
@@ -35,6 +36,7 @@ public class TurretSubsystem {
     public void aimTurretByServo(){
         turretRotation.setPosition(calculateAimAngle()*servoMultiplier);
     }
+
 
 
 
