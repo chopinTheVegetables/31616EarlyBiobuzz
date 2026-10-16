@@ -33,6 +33,8 @@ public class robotConfig {
     ///---Hive points to aim at
     public static Pose lowerRedHiveAim = new Pose(57.5, 56);
     public static Pose upperRedHiveAim = new Pose(57.5, 88);
+    public static Pose lowerBlueHiveAim = new Pose(86.4, 56);
+    public static Pose upperBlueHiveAim = new Pose(86.4, 88);
     ///---
     public enum Alliance{
         RED, BLUE

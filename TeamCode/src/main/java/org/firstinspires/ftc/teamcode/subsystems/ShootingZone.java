@@ -1,8 +1,11 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import static org.firstinspires.ftc.teamcode.utils.robotConfig.lowerBlueHiveAim;
 import static org.firstinspires.ftc.teamcode.utils.robotConfig.lowerBlueRect;
+import static org.firstinspires.ftc.teamcode.utils.robotConfig.lowerRedHiveAim;
 import static org.firstinspires.ftc.teamcode.utils.robotConfig.lowerRedRect;
 import static org.firstinspires.ftc.teamcode.utils.robotConfig.upperBlueRect;
+import static org.firstinspires.ftc.teamcode.utils.robotConfig.upperRedHiveAim;
 import static org.firstinspires.ftc.teamcode.utils.robotConfig.upperRedRect;
 
 import android.graphics.Point;
@@ -27,6 +30,8 @@ public class ShootingZone {
     robotConfig.Alliance alliance;
     Rectangle lowerRect;
     Rectangle upperRect;
+    Pose upperHive;
+    Pose lowerHive;
 
     //TODO implement alliances for each autonomous
     public ShootingZone(Follower follower, robotConfig.Alliance alliance){
@@ -35,10 +40,14 @@ public class ShootingZone {
         if(this.alliance == robotConfig.Alliance.RED){
             upperRect = upperRedRect;
             lowerRect = lowerRedRect;
+            upperHive = upperRedHiveAim;
+            lowerHive = lowerRedHiveAim;
         }
         if(this.alliance == robotConfig.Alliance.BLUE){
             upperRect = upperBlueRect;
             lowerRect = lowerBlueRect;
+            upperHive = upperRedHiveAim;
+            lowerHive = lowerBlueHiveAim;
         }else{//edge case
             upperRect = null;
             lowerRect = null;
@@ -55,12 +64,12 @@ public class ShootingZone {
         if(currentPose.x() > upperRedRect.getLowestY() && currentPose.x() < upperRedRect.getHighestX() &&
             currentPose.y()> upperRedRect.getLowestY() && currentPose.y() < upperRedRect.getHighestY()) {
             state = ZoneState.AimingAtHighHive;
-            return robotConfig.upperRedHiveAim;
+            return upperHive;
             //aim at low hive is below
         }else if(currentPose.x() > lowerRect.getLowestX() && currentPose.x() < lowerRect.getHighestX() &&
                  currentPose.y() > lowerRect.getLowestY() && currentPose.y() < lowerRect.getHighestY()) {
             state = ZoneState.AimingAtLowHive;
-            return robotConfig.lowerRedHiveAim;
+            return lowerHive;
 
         }//if not in the zone do nothing
         else{
