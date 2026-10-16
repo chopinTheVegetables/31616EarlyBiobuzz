@@ -22,6 +22,7 @@ import org.firstinspires.ftc.teamcode.utils.robotConfig;
 import java.util.Arrays;
 
 public class ShootingZone {
+    //there is on purpose a 12 inch deadzone, this is to allow for switching better
     public enum ZoneState{
         AimingAtHighHive, AimingAtLowHive,
         AimingAtCenter
