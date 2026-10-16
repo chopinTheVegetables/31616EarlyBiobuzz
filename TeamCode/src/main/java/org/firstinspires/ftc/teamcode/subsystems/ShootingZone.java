@@ -8,8 +8,7 @@ import static org.firstinspires.ftc.teamcode.utils.robotConfig.upperBlueRect;
 import static org.firstinspires.ftc.teamcode.utils.robotConfig.upperRedHiveAim;
 import static org.firstinspires.ftc.teamcode.utils.robotConfig.upperRedRect;
 
-import android.graphics.Point;
-import android.graphics.Rect;
+
 
 import com.pedropathing.follower.Follower;
 import com.pedropathing.math.Pose;
@@ -17,7 +16,6 @@ import com.pedropathing.math.Pose;
 import org.firstinspires.ftc.teamcode.utils.Rectangle;
 import org.firstinspires.ftc.teamcode.utils.robotConfig;
 
-import java.util.Arrays;
 
 public class ShootingZone {
     //there is on purpose a 12 inch deadzone, this is to allow for switching better
@@ -33,7 +31,6 @@ public class ShootingZone {
     Pose upperHive;
     Pose lowerHive;
 
-    //TODO implement alliances for each autonomous
     public ShootingZone(Follower follower, robotConfig.Alliance alliance){
         this.alliance = alliance;
         this.follower = follower;

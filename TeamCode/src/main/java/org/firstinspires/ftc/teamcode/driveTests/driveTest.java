@@ -1,16 +1,9 @@
-package org.firstinspires.ftc.teamcode.DriveTests;
+package org.firstinspires.ftc.teamcode.driveTests;
 
-import com.pedropathing.drivetrain.DrivePowers;
-import com.pedropathing.follower.Follower;
-import com.pedropathing.follower.ManualDrive;
-import com.pedropathing.math.Pose;
-import com.pedropathing.revhub.drivetrains.Mecanum;
-import com.pedropathing.revhub.localizers.PinpointLocalizer;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-import org.firstinspires.ftc.teamcode.pedro.Constants;
 @TeleOp(name = "TeleOpDrive")
 public class driveTest extends OpMode {
     DcMotor fl;

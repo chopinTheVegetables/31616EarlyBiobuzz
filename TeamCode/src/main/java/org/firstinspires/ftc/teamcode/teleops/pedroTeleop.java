@@ -1,16 +1,12 @@
-package org.firstinspires.ftc.teamcode.DriveTests;
+package org.firstinspires.ftc.teamcode.teleops;
 
 import static org.firstinspires.ftc.teamcode.utils.robotConfig.intakeName;
 
-import com.pedropathing.api.Paths;
 import com.pedropathing.api.PoseFactory;
-import com.pedropathing.controllers.PIDController;
 import com.pedropathing.drivetrain.DrivePowers;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.follower.ManualDrive;
-import com.pedropathing.math.Pose;
 import com.pedropathing.paths.Path;
-import com.pedropathing.paths.interpolator.Interpolator;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -67,18 +63,7 @@ public class pedroTeleop extends OpMode {
             telemetry.addData("limiting...","");
             telemetry.update();
         }
-        if(gamepad1.xWasReleased()){
-            pathGenerated = Paths.line(follower.pose(), LL.getClosestPollen()).heading(Interpolator.tangent);
-            pathGenerated.with(
-                    Constants.foresightConfig.maxPathSpeed.at(0.3)
-            );
-            pathGenerated.heading(0);
-        }
-        if(gamepad1.a) {
-            follower.follow(pathGenerated);
-            follower.update();
-        }
-        telemetry.addData("limelight,", LL.getClosestPollen());
+
         telemetry.addData("robot", follower.pose());
         telemetry.update();
         //spin intake
