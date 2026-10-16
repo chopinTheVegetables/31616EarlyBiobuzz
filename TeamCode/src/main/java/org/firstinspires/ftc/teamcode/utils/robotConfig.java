@@ -15,25 +15,16 @@ public class robotConfig {
     public static final double LLHeight = 10;
     public static final double LLForwardOffset = -1;
     public static final double LLRightOffset = 0;
-    ///____red upper rect start
-    public static double redUpperRectMaxX = 100;
-    public static double redUpperRectMinX = 0;
-    public static double redUpperRectMaxY = 144;
-    public static double redUpperRectMinY = 78;
-
-    //for shooting automation
-    public static Pose [] redUpperRect = {new Pose(redUpperRectMinX,redUpperRectMinY), new Pose(redUpperRectMinX,redUpperRectMaxY),
-                                           new Pose(redUpperRectMaxX, redUpperRectMaxY) ,new Pose(redUpperRectMaxX,redUpperRectMinY)};
-    ///____end
-      public static double redLowerRectMaxX = 100;
-         public static double redLowerRectMinX = 0;
-         public static double redLowerRectMaxY = 66;
-         public static double redLowerRectMinY = 0;
-    public static Pose [] redLowerRect = {new Pose(redLowerRectMinX,redLowerRectMinY), new Pose(redLowerRectMinX,redLowerRectMaxY),
-                                            new Pose(redLowerRectMaxX, redLowerRectMaxY),new Pose(redLowerRectMaxX,redLowerRectMinY)};
 
 
-    ///---Hives
+    //for shooting automation: shooting zones
+    public static Rectangle upperRedRect = new Rectangle(new Pose(0,78), new Pose(0,144),
+            new Pose(100,144), new Pose(100,78));
+    public static Rectangle lowerRedRect = new Rectangle(new Pose(0,0), new Pose(0,66),
+            new Pose(100,66), new Pose(100,0));
+
+
+    ///---Hive points to aim at
     public static Pose lowerRedHiveAim = new Pose(57.5, 56);
     public static Pose upperRedHiveAim = new Pose(57.5, 88);
     ///---

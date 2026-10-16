@@ -1,15 +1,7 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
-import static org.firstinspires.ftc.teamcode.utils.robotConfig.redLowerRect;
-import static org.firstinspires.ftc.teamcode.utils.robotConfig.redLowerRectMaxX;
-import static org.firstinspires.ftc.teamcode.utils.robotConfig.redLowerRectMaxY;
-import static org.firstinspires.ftc.teamcode.utils.robotConfig.redLowerRectMinX;
-import static org.firstinspires.ftc.teamcode.utils.robotConfig.redLowerRectMinY;
-import static org.firstinspires.ftc.teamcode.utils.robotConfig.redUpperRect;
-import static org.firstinspires.ftc.teamcode.utils.robotConfig.redUpperRectMaxX;
-import static org.firstinspires.ftc.teamcode.utils.robotConfig.redUpperRectMaxY;
-import static org.firstinspires.ftc.teamcode.utils.robotConfig.redUpperRectMinX;
-import static org.firstinspires.ftc.teamcode.utils.robotConfig.redUpperRectMinY;
+import static org.firstinspires.ftc.teamcode.utils.robotConfig.lowerRedRect;
+import static org.firstinspires.ftc.teamcode.utils.robotConfig.upperRedRect;
 
 import android.graphics.Point;
 import android.graphics.Rect;
@@ -17,6 +9,7 @@ import android.graphics.Rect;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.math.Pose;
 
+import org.firstinspires.ftc.teamcode.utils.Rectangle;
 import org.firstinspires.ftc.teamcode.utils.robotConfig;
 
 import java.util.Arrays;
@@ -30,16 +23,16 @@ public class ShootingZone {
     public ZoneState state;
     Follower follower;
     robotConfig.Alliance alliance;
-    Pose [] upperRect;
-    Pose [] lowerRect;
+    Rectangle lowerRect;
+    Rectangle upperRect;
 
     //TODO implement alliances for each autonomous
     public ShootingZone(Follower follower, robotConfig.Alliance alliance){
         this.alliance = alliance;
         this.follower = follower;
         if(this.alliance == robotConfig.Alliance.RED){
-            upperRect = redUpperRect;
-            lowerRect = redLowerRect;
+            upperRect = upperRedRect;
+            lowerRect = lowerRedRect;
         }//TODO ADD BLUE CONDITION
     }
 
@@ -50,13 +43,13 @@ public class ShootingZone {
     public Pose hiveAimingTargetBasedOnZones(){
         Pose currentPose = follower.pose();
         //aim at high hive
-        if(currentPose.x() > redUpperRectMinX && currentPose.x() < redUpperRectMaxX &&
-            currentPose.y()> redUpperRectMinY && currentPose.y() < redUpperRectMaxY) {
+        if(currentPose.x() > upperRedRect.getLowestY() && currentPose.x() < upperRedRect.getHighestX() &&
+            currentPose.y()> upperRedRect.getLowestY() && currentPose.y() < upperRedRect.getHighestY()) {
             state = ZoneState.AimingAtHighHive;
             return robotConfig.upperRedHiveAim;
             //aim at low hive is below
-        }else if(currentPose.x() > redLowerRectMinX && currentPose.x() < redLowerRectMaxX &&
-                currentPose.y()> redLowerRectMinY && currentPose.y() < redLowerRectMaxY) {
+        }else if(currentPose.x() > lowerRect.getLowestX() && currentPose.x() < lowerRect.getHighestX() &&
+                 currentPose.y() > lowerRect.getLowestY() && currentPose.y() < lowerRect.getHighestY()) {
             state = ZoneState.AimingAtLowHive;
             return robotConfig.lowerRedHiveAim;
 
