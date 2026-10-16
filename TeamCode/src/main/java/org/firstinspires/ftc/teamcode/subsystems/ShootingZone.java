@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import static org.firstinspires.ftc.teamcode.utils.robotConfig.lowerBlueRect;
 import static org.firstinspires.ftc.teamcode.utils.robotConfig.lowerRedRect;
+import static org.firstinspires.ftc.teamcode.utils.robotConfig.upperBlueRect;
 import static org.firstinspires.ftc.teamcode.utils.robotConfig.upperRedRect;
 
 import android.graphics.Point;
@@ -33,7 +35,14 @@ public class ShootingZone {
         if(this.alliance == robotConfig.Alliance.RED){
             upperRect = upperRedRect;
             lowerRect = lowerRedRect;
-        }//TODO ADD BLUE CONDITION
+        }
+        if(this.alliance == robotConfig.Alliance.BLUE){
+            upperRect = upperBlueRect;
+            lowerRect = lowerBlueRect;
+        }else{//edge case
+            upperRect = null;
+            lowerRect = null;
+        }
     }
 
     /**

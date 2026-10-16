@@ -18,10 +18,16 @@ public class robotConfig {
 
 
     //for shooting automation: shooting zones
+    ///RED
     public static Rectangle upperRedRect = new Rectangle(new Pose(0,78), new Pose(0,144),
             new Pose(100,144), new Pose(100,78));
     public static Rectangle lowerRedRect = new Rectangle(new Pose(0,0), new Pose(0,66),
             new Pose(100,66), new Pose(100,0));
+    ///BLUE
+    public static Rectangle upperBlueRect = new Rectangle(new Pose(44,78), new Pose(44,144),
+            new Pose(144,144), new Pose(144,78));
+    public static Rectangle lowerBlueRect = new Rectangle(new Pose(144,0), new Pose(144,66),
+            new Pose(44,66), new Pose(44,0));
 
 
     ///---Hive points to aim at
