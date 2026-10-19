@@ -10,14 +10,18 @@ import com.pedropathing.paths.Path;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 import org.firstinspires.ftc.teamcode.subsystems.LLdetector;
 
 @TeleOp
 public class pedroTeleop extends OpMode {
+    double shooterPow;
     Path pathGenerated;
+    DcMotorEx shooter;
     DcMotor intake;
+    DcMotor intake2;
     private Follower follower;
     private final PoseFactory p = PoseFactory.degrees();
     double lastIntakePower;
@@ -28,8 +32,10 @@ public class pedroTeleop extends OpMode {
     @Override
     public void init() {
         follower = Constants.create(hardwareMap);
-        intake = hardwareMap.get(DcMotor.class, intakeName);
+        intake = hardwareMap.get(DcMotor.class, "intakeL");
+        intake2 = hardwareMap.get(DcMotor.class, "intakeR");
         LL = new LLdetector(hardwareMap, follower);
+        shooter = hardwareMap.get(DcMotorEx.class, "flywheel");
     }
 
     @Override
@@ -60,16 +66,24 @@ public class pedroTeleop extends OpMode {
         if (Math.abs(intakePower) > Math.abs(lastIntakePower) + intakePowerThreshold + 0.05) {
             double modifier = Math.signum(intakePower) * intakePowerThreshold;
             intakePower = lastIntakePower + modifier;
-            telemetry.addData("limiting...","");
-            telemetry.update();
         }
 
-        telemetry.addData("robot", follower.pose());
-        telemetry.update();
         //spin intake
         intake.setPower(intakePower);
+        intake2.setPower(intakePower);
         lastIntakePower = intakePower;
         ///INTAKE END-----
+        if(gamepad1.dpadUpWasReleased()){
+            shooterPow +=500;
+        }if(gamepad1.dpadDownWasReleased()){
+            shooterPow -=500;
+        }
+        shooter.setVelocity(shooterPow*28/60);
+        shooter.setPower(shooterPow);
+        telemetry.addData("robot", follower.pose());
+        telemetry.addData("rpm,", shooterPow);
+        telemetry.addData("actual", shooter.getVelocity()/28*60);
+        telemetry.update();
 
     }
 

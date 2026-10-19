@@ -33,7 +33,6 @@ public class LLdetector {
         if (LL.getLatestResult() == null || !LL.getLatestResult().isValid()) {
             return null;
         }
-
         //LL tilt angle from the vertical
         double theta = LLtiltAngle;
         //mount height of LL
