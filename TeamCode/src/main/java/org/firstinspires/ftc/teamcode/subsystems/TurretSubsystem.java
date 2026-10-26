@@ -33,8 +33,13 @@ public class TurretSubsystem {
         return currentPose.heading() + Math.toDegrees(Math.atan2(targetPose.y() - currentPose.y(),
                 targetPose.x() - currentPose.x()));
     }
-    public void aimTurretByServo(){
+    ///For use by servo
+    public void autoAimTurretNoSOTM(){
         turretRotation.setPosition(calculateAimAngle()*servoMultiplier);
+    }
+    public void manualAngleSet(double theta){
+        turretRotation.setPosition(theta*servoMultiplier);
+
     }
 
 

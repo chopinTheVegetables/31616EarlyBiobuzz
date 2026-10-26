@@ -38,10 +38,11 @@ public class robotConfig {
     public static Pose upperRedHiveAim = new Pose(57.5, 88);
     public static Pose lowerBlueHiveAim = new Pose(86.4, 56);
     public static Pose upperBlueHiveAim = new Pose(86.4, 88);
-    ///---
+    ///--- end
     public enum Alliance{
         RED, BLUE
     }
+    public static final String allianceKey = "allianceRedOrBlue";
 
 
 
