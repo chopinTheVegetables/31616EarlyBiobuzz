@@ -41,6 +41,12 @@ public class TurretSubsystem {
         turretRotation.setPosition(theta*servoMultiplier);
 
     }
+    public void setFlywheelVelocity(int vel ){
+        flywheel.setVelocity(vel*28/60);
+    }
+    public double getFlywheelVelocity(){
+        return flywheel.getVelocity()/28*60;
+    }
 
 
 

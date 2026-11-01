@@ -7,7 +7,10 @@ import com.pedropathing.math.Pose;
 import java.util.ArrayList;
 
 public class robotConfig {
-    public static final String intakeName = "intake";
+    public static final String intakeRName = "intakeR";
+    public static final String intakeLName = "intakeL";
+    public static final double intakeMotorEncoderRes = 145.1;
+
     public static final String flywheelMotorName = "flywheel";
     public static final String turretRotName = "turret";
     public static int turretRotationDegrees = 270;

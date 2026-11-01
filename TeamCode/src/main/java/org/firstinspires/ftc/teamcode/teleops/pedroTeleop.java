@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.teleops;
 
-import static org.firstinspires.ftc.teamcode.utils.robotConfig.intakeName;
 
 import com.pedropathing.api.PoseFactory;
 import com.pedropathing.drivetrain.DrivePowers;
@@ -17,6 +16,7 @@ import org.firstinspires.ftc.teamcode.subsystems.LLdetector;
 
 @TeleOp
 public class pedroTeleop extends OpMode {
+
     double shooterPow;
     Path pathGenerated;
     DcMotorEx shooter;
@@ -70,19 +70,18 @@ public class pedroTeleop extends OpMode {
 
         //spin intake
         intake.setPower(intakePower);
-        intake2.setPower(intakePower);
+        intake2.setPower(-intakePower);
         lastIntakePower = intakePower;
         ///INTAKE END-----
         if(gamepad1.dpadUpWasReleased()){
-            shooterPow +=500;
+            shooterPow +=200;
         }if(gamepad1.dpadDownWasReleased()){
-            shooterPow -=500;
+            shooterPow -=200;
         }
         shooter.setVelocity(shooterPow*28/60);
-        shooter.setPower(shooterPow);
         telemetry.addData("robot", follower.pose());
         telemetry.addData("rpm,", shooterPow);
-        telemetry.addData("actual", shooter.getVelocity()/28*60);
+        telemetry.addData("actual", shooter.getVelocity()/28*60*4);
         telemetry.update();
 
     }
