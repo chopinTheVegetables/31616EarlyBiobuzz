@@ -36,7 +36,7 @@ public class ManualTeleOp extends OpMode {
         );
         f.manual(powers);
         f.update();
-        turret.setFlywheelVelocity(shooterSpeed);
+        turret.setMainFlywheelVelocity(shooterSpeed);
         if(gamepad2.dpadUpWasReleased()){
             shooterSpeed += 250;
         }

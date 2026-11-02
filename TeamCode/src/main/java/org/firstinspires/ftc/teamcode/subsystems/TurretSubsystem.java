@@ -1,27 +1,32 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
 
+import static org.firstinspires.ftc.teamcode.utils.robotConfig.counterRollerMotorName;
 import static org.firstinspires.ftc.teamcode.utils.robotConfig.flywheelMotorName;
+import static org.firstinspires.ftc.teamcode.utils.robotConfig.motorToCounterRollerGearRatio;
+import static org.firstinspires.ftc.teamcode.utils.robotConfig.motorToFlywheelGearRatio;
 import static org.firstinspires.ftc.teamcode.utils.robotConfig.servoMultiplier;
 import static org.firstinspires.ftc.teamcode.utils.robotConfig.turretRotName;
 
 import com.pedropathing.follower.Follower;
 import com.pedropathing.math.Pose;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.utils.robotConfig;
 
 public class TurretSubsystem {
-    DcMotorEx flywheel;
+    DcMotorEx mainFlywheel;
+    DcMotorEx counterRoller;
     Servo turretRotation;
     ShootingZone zoneDetector;
     Follower f;
-
     public TurretSubsystem(HardwareMap hardwareMap, Follower follower, robotConfig.Alliance alliance){
-        flywheel = hardwareMap.get(DcMotorEx.class, flywheelMotorName);
+        mainFlywheel = hardwareMap.get(DcMotorEx.class, flywheelMotorName);
+        counterRoller = hardwareMap.get(DcMotorEx.class, counterRollerMotorName);
+        counterRoller.setDirection(DcMotorSimple.Direction.REVERSE); //backwards
         turretRotation = hardwareMap.get(Servo.class, turretRotName);
         zoneDetector = new ShootingZone(follower, alliance);
         this.f = follower;
@@ -41,11 +46,20 @@ public class TurretSubsystem {
         turretRotation.setPosition(theta*servoMultiplier);
 
     }
-    public void setFlywheelVelocity(int vel ){
-        flywheel.setVelocity(vel*28/60);
+    public void setMainFlywheelVelocity(int vel ){
+        mainFlywheel.setVelocity(vel*28/60);
     }
-    public double getFlywheelVelocity(){
-        return flywheel.getVelocity()/28*60;
+    public void setBothFlywheelsEven(double mainFlywheelSpeed){
+        mainFlywheel.setVelocity(mainFlywheelSpeed/60/motorToFlywheelGearRatio*28);
+        //convert to counter roller speed
+        counterRoller.setVelocity((mainFlywheelSpeed*Math.PI)/60/motorToCounterRollerGearRatio*28);
+    }
+
+    public double getmainFlywheelVelocity(){
+        return mainFlywheel.getVelocity()/28*60*motorToFlywheelGearRatio;
+    }
+    public double getCounterRollerVelocity(){
+        return counterRoller.getVelocity()/28*60*motorToCounterRollerGearRatio;
     }
 
 

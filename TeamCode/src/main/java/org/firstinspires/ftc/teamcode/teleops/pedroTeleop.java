@@ -10,16 +10,22 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 import org.firstinspires.ftc.teamcode.subsystems.LLdetector;
 
 @TeleOp
 public class pedroTeleop extends OpMode {
+    Servo flowerRamp;
 
-    double shooterPow;
+    double shooterPow = 0;
+    double shooterPow2 = 0;
+
     Path pathGenerated;
     DcMotorEx shooter;
+    DcMotorEx shooter2;
+
     DcMotor intake;
     DcMotor intake2;
     private Follower follower;
@@ -29,6 +35,7 @@ public class pedroTeleop extends OpMode {
     double intakePowerThreshold = 0.05;
     LLdetector LL;
     boolean driveLocked = true;
+    boolean flowerDeployed;
     @Override
     public void init() {
         follower = Constants.create(hardwareMap);
@@ -36,6 +43,8 @@ public class pedroTeleop extends OpMode {
         intake2 = hardwareMap.get(DcMotor.class, "intakeR");
         LL = new LLdetector(hardwareMap, follower);
         shooter = hardwareMap.get(DcMotorEx.class, "flywheel");
+        shooter2 = hardwareMap.get(DcMotorEx.class, "flywheel2");
+        flowerRamp = hardwareMap.get(Servo.class, "flower");
     }
 
     @Override
@@ -67,7 +76,9 @@ public class pedroTeleop extends OpMode {
             double modifier = Math.signum(intakePower) * intakePowerThreshold;
             intakePower = lastIntakePower + modifier;
         }
-
+        if(gamepad1.xWasReleased()){
+            flowerDeployed  =!flowerDeployed;
+        }
         //spin intake
         intake.setPower(intakePower);
         intake2.setPower(-intakePower);
@@ -78,10 +89,25 @@ public class pedroTeleop extends OpMode {
         }if(gamepad1.dpadDownWasReleased()){
             shooterPow -=200;
         }
+        if(gamepad1.aWasReleased()){
+            shooterPow2 -=200;
+        }if(gamepad1.yWasReleased()){
+            shooterPow2 +=200;
+        }
+        if(flowerDeployed){
+            flowerRamp.setPosition(0.9);
+        }
+        else if(!flowerDeployed){
+            flowerRamp.setPosition(0.4);
+        }
+
         shooter.setVelocity(shooterPow*28/60);
+        shooter2.setVelocity(shooterPow2*28/60);
         telemetry.addData("robot", follower.pose());
         telemetry.addData("rpm,", shooterPow);
         telemetry.addData("actual", shooter.getVelocity()/28*60*4);
+        telemetry.addData("rpm,", shooterPow2);
+        telemetry.addData("actual", shooter2.getVelocity()/28*60*4);
         telemetry.update();
 
     }

@@ -12,6 +12,14 @@ public class robotConfig {
     public static final double intakeMotorEncoderRes = 145.1;
 
     public static final String flywheelMotorName = "flywheel";
+    public static final String counterRollerMotorName = "flywheel2";
+    ///FLYWHEELS SCHEMATICS
+    public static double motorToFlywheelGearRatio = 4;
+    public static double motorToCounterRollerGearRatio = 1;
+
+    public static double mainFlywheelSize = 2; //inches
+    public static double counterRollerSize = 1; //inches
+
     public static final String turretRotName = "turret";
     public static int turretRotationDegrees = 270;
     public static double servoMultiplier = 1.0/turretRotationDegrees; //1 div by servo range (deg)
