@@ -25,18 +25,23 @@ public class TurretSubsystem {
     ShootingZone zoneDetector;
     Follower follower;
 
-    // Class variables connected to your configuration dashboard
+    // constants for main flywheel
     public static double mkV = 0.0015; // Default baseline for 6000 RPM motors
     public static double mkP = 0.0005;
     public static double mkI = 0.0;
     public static double mkD = 0.0;
-
+    //constants for counterroller pid + kV
     public static double ckV = 0.0003;
     public static double ckP = 0.0005;
     public static double ckI = 0.0;
     public static double ckD = 0.0;
 
     private double targetVelocity = 0.0;
+    Controller mainPower = Controller.pid(mkP, mkI, mkD)
+            .plus(Controller.proportionalFeedforward(mkV));
+    Controller subPower = Controller.pid(ckP, ckI, ckD)
+            .plus(Controller.proportionalFeedforward(ckV));
+
 
     public TurretSubsystem(HardwareMap hardwareMap, Follower follower, robotConfig.Alliance alliance){
         mainFlywheel = hardwareMap.get(DcMotorEx.class, flywheelMotorName);
@@ -55,14 +60,31 @@ public class TurretSubsystem {
         this.follower = follower;
     }
 
-    private double calculateAimAngle(){
+    private double calculateAimAngle() {
         Pose currentPose = follower.pose();
         Pose targetPose = zoneDetector.hiveAimingTargetBasedOnZones();
-        return currentPose.heading() + Math.toDegrees(Math.atan2(targetPose.y() - currentPose.y(), targetPose.x() - currentPose.x()));
+
+        // Calculate global angle to target in degrees
+        double globalTargetAngle = Math.toDegrees(Math.atan2(targetPose.y() - currentPose.y(), targetPose.x() - currentPose.x()));
+
+        // Convert current robot heading from radians to degrees
+        double robotHeadingDegrees = Math.toDegrees(currentPose.heading());
+
+        // Return relative target angle to robot heading so we can actually set the position
+        return globalTargetAngle - robotHeadingDegrees;
     }
 
-    public void autoAimTurretNoSOTM(){ turretRotation.setPosition(calculateAimAngle() * servoMultiplier); }
-    public void manualAngleSet(double theta){ turretRotation.setPosition(theta * servoMultiplier); }
+
+    // Centers the calculation at the 0.5 servo midpoint position
+    public void autoAimTurretNoSOTM() {
+        double servoPosition = 0.5 + (calculateAimAngle() * servoMultiplier);
+        turretRotation.setPosition(Math.max(0.0, Math.min(1.0, servoPosition)));
+    }
+
+    public void manualAngleSet(double theta) {
+        double servoPosition = 0.5 + (theta * servoMultiplier);
+        turretRotation.setPosition(Math.max(0.0, Math.min(1.0, servoPosition)));
+    }
     public void setBothFlywheelsEven(double mainFlywheelSpeed){ this.targetVelocity = mainFlywheelSpeed; }
 
     public double getMainFlywheelVelocity(){ return mainFlywheel.getVelocity() / 28 * 60 * (66.0 / 40.0); }
@@ -80,14 +102,13 @@ public class TurretSubsystem {
         double targetSubTicks = ((targetVelocity * Math.PI) * motorToCounterRollerGearRatio * 28.0) / 60.0;
 
         // Dynamically rebuild the controllers inline every loop frame to inject current dashboard values
-        double mainPower = Controller.pid(mkP, mkI, mkD).plus(Controller.proportionalFeedforward(mkV))
-                .calculate(targetMainTicks - mainFlywheel.getVelocity(), targetMainTicks);
 
-        double subPower = Controller.pid(ckP, ckI, ckD).plus(Controller.proportionalFeedforward(ckV))
-                .calculate(targetSubTicks - Math.abs(counterRoller.getVelocity()), targetSubTicks);
+        double mainPow = mainPower.calculate(targetMainTicks - mainFlywheel.getVelocity(), targetMainTicks);
+
+        double subPow = subPower.calculate(targetSubTicks - Math.abs(counterRoller.getVelocity()), targetSubTicks);
 
         // Apply safely clipped powers
-        mainFlywheel.setPower(Math.max(0, Math.min(1, mainPower)));
-        counterRoller.setPower(Math.max(0, Math.min(1, subPower)));
+        mainFlywheel.setPower(Math.max(0, Math.min(1, mainPow)));
+        counterRoller.setPower(Math.max(0, Math.min(1, subPow)));
     }
 }

@@ -41,7 +41,7 @@ public class ShootingZone {
             upperHive = upperRedHiveAim;
             lowerHive = lowerRedHiveAim;
         }
-        if(this.alliance == robotConfig.Alliance.BLUE){
+        else if(this.alliance == robotConfig.Alliance.BLUE){
             upperRect = upperBlueRect;
             lowerRect = lowerBlueRect;
             upperHive = upperBlueHiveAim;
@@ -59,8 +59,8 @@ public class ShootingZone {
     public Pose hiveAimingTargetBasedOnZones(){
         Pose currentPose = follower.pose();
         //aim at high hive
-        if(currentPose.x() > upperRedRect.getLowestY() && currentPose.x() < upperRedRect.getHighestX() &&
-            currentPose.y()> upperRedRect.getLowestY() && currentPose.y() < upperRedRect.getHighestY()) {
+        if(currentPose.x() > upperRect.getLowestX() && currentPose.x() < upperRect.getHighestX() &&
+            currentPose.y()> upperRect.getLowestY() && currentPose.y() < upperRect.getHighestY()) {
             state = ZoneState.AimingAtHighHive;
             return upperHive;
             //aim at low hive is below
