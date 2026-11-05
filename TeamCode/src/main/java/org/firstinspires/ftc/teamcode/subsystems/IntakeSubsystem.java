@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 
-public class intakeSubsystem {
+public class IntakeSubsystem {
     ///PLUG ENCODER INTO RIGHT PORT
     DcMotorEx rIntake;
     DcMotorEx lIntake;
@@ -17,7 +17,7 @@ public class intakeSubsystem {
     private double i = 0;
     private double d = 0;
     private double targetRPM = 0;
-    public intakeSubsystem(HardwareMap hardwareMap){
+    public IntakeSubsystem(HardwareMap hardwareMap){
         rIntake = hardwareMap.get(DcMotorEx.class, intakeRName);
         lIntake = hardwareMap.get(DcMotorEx.class, intakeLName);
         lIntake.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -27,6 +27,10 @@ public class intakeSubsystem {
         targetRPM = targetVel;
         rIntake.setVelocity(targetVel*intakeMotorEncoderRes/60);
         lIntake.setPower(rIntake.getPower());
+    }
+    public void setPower(double power){
+        rIntake.setPower(power);
+        lIntake.setPower(power);
     }
 
 

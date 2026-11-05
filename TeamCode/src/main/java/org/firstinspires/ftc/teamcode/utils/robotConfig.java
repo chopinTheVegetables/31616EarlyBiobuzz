@@ -14,7 +14,7 @@ public class robotConfig {
     public static final String flywheelMotorName = "flywheel";
     public static final String counterRollerMotorName = "flywheel2";
     ///FLYWHEELS SCHEMATICS
-    public static double motorToFlywheelGearRatio = 4;
+    public static double motorToFlywheelGearRatio = 66/40;
     public static double motorToCounterRollerGearRatio = 1;
 
     public static double mainFlywheelSize = 2; //inches

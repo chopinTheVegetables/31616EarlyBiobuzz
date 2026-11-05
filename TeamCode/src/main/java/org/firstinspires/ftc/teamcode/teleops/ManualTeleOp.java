@@ -10,13 +10,13 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 import org.firstinspires.ftc.teamcode.subsystems.TurretSubsystem;
-import org.firstinspires.ftc.teamcode.subsystems.intakeSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.utils.robotConfig;
 
 @TeleOp
 public class ManualTeleOp extends OpMode {
     Follower f;
-    intakeSubsystem intake;
+    IntakeSubsystem intake;
     TurretSubsystem turret;
     int shooterSpeed = 2000;
 
@@ -36,7 +36,7 @@ public class ManualTeleOp extends OpMode {
         );
         f.manual(powers);
         f.update();
-        turret.setMainFlywheelVelocity(shooterSpeed);
+        //turret.setMainFlywheelVelocity(shooterSpeed);
         if(gamepad2.dpadUpWasReleased()){
             shooterSpeed += 250;
         }

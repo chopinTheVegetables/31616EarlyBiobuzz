@@ -9,18 +9,18 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 import org.firstinspires.ftc.teamcode.subsystems.TurretSubsystem;
-import org.firstinspires.ftc.teamcode.subsystems.intakeSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.utils.robotConfig;
 
 public class autoTeleOp extends OpMode {
     Follower follower;
     TurretSubsystem turret;
-    intakeSubsystem intake;
+    IntakeSubsystem intake;
     @Override
     public void init() {
         follower = Constants.create(hardwareMap);
         turret = new TurretSubsystem(hardwareMap,follower, (robotConfig.Alliance) blackboard.get(allianceKey));
-        intake = new intakeSubsystem(hardwareMap);
+        intake = new IntakeSubsystem(hardwareMap);
     }
 
     @Override
