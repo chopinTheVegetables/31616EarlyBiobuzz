@@ -26,6 +26,7 @@ public class TurretSubsystem {
     Follower follower;
 
     // constants for main flywheel
+    public static double counterRollerConst = 2;
     public static double mkV = 0.0015; // Default baseline for 6000 RPM motors
     public static double mkP = 0.0005;
     public static double mkI = 0.0;
@@ -99,15 +100,12 @@ public class TurretSubsystem {
 
         // RPM --> Ticks per second
         double targetMainTicks = (targetVelocity * (40.0 / 66.0) * 28.0) / 60.0;
-        double targetSubTicks = ((targetVelocity * Math.PI) * motorToCounterRollerGearRatio * 28.0) / 60.0;
-
-        // Dynamically rebuild the controllers inline every loop frame to inject current dashboard values
-
+        double targetSubTicks = ((targetVelocity * counterRollerConst) * motorToCounterRollerGearRatio * 28.0) / 60.0;
+        //pid calculations
         double mainPow = mainPower.calculate(targetMainTicks - mainFlywheel.getVelocity(), targetMainTicks);
-
         double subPow = subPower.calculate(targetSubTicks - Math.abs(counterRoller.getVelocity()), targetSubTicks);
 
-        // Apply safely clipped powers
+        //clippingx
         mainFlywheel.setPower(Math.max(0, Math.min(1, mainPow)));
         counterRoller.setPower(Math.max(0, Math.min(1, subPow)));
     }
