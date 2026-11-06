@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.driveTests;
+package org.firstinspires.ftc.teamcode.autos;
 
 import static com.pedropathing.api.Paths.*;
 
@@ -17,7 +17,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 
 @Autonomous(name = "testauto", group = "Autonomous")
-public class testAuto extends LinearOpMode {
+public class OldTestAuto extends LinearOpMode {
 
     private Follower follower;
 

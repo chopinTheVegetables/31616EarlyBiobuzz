@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.subsystems.TurretSubsystem;
 import org.firstinspires.ftc.teamcode.utils.RobotConfig;
 @Configurable
 @TeleOp
-public class dualFlywheelTest extends OpMode {
+public class DualFlywheelTest extends OpMode {
     IntakeSubsystem intake;
     TurretSubsystem turret;
     Follower f;

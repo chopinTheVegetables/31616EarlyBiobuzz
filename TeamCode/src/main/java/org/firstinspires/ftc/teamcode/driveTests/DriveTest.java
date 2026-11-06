@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 @TeleOp(name = "TeleOpDrive")
-public class driveTest extends OpMode {
+public class DriveTest extends OpMode {
     DcMotor fl;
     DcMotor fr;
     DcMotor bl;
