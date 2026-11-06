@@ -1,12 +1,8 @@
 package org.firstinspires.ftc.teamcode.utils;
 
-import android.graphics.Point;
-
 import com.pedropathing.math.Pose;
 
-import java.util.ArrayList;
-
-public class robotConfig {
+public class RobotConfig {
     public static final String intakeRName = "intakeR";
     public static final String intakeLName = "intakeL";
     public static final double intakeMotorEncoderRes = 145.1;

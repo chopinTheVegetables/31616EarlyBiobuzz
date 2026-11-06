@@ -1,13 +1,13 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
-import static org.firstinspires.ftc.teamcode.utils.robotConfig.lowerBlueHiveAim;
-import static org.firstinspires.ftc.teamcode.utils.robotConfig.lowerBlueRect;
-import static org.firstinspires.ftc.teamcode.utils.robotConfig.lowerRedHiveAim;
-import static org.firstinspires.ftc.teamcode.utils.robotConfig.lowerRedRect;
-import static org.firstinspires.ftc.teamcode.utils.robotConfig.upperBlueHiveAim;
-import static org.firstinspires.ftc.teamcode.utils.robotConfig.upperBlueRect;
-import static org.firstinspires.ftc.teamcode.utils.robotConfig.upperRedHiveAim;
-import static org.firstinspires.ftc.teamcode.utils.robotConfig.upperRedRect;
+import static org.firstinspires.ftc.teamcode.utils.RobotConfig.lowerBlueHiveAim;
+import static org.firstinspires.ftc.teamcode.utils.RobotConfig.lowerBlueRect;
+import static org.firstinspires.ftc.teamcode.utils.RobotConfig.lowerRedHiveAim;
+import static org.firstinspires.ftc.teamcode.utils.RobotConfig.lowerRedRect;
+import static org.firstinspires.ftc.teamcode.utils.RobotConfig.upperBlueHiveAim;
+import static org.firstinspires.ftc.teamcode.utils.RobotConfig.upperBlueRect;
+import static org.firstinspires.ftc.teamcode.utils.RobotConfig.upperRedHiveAim;
+import static org.firstinspires.ftc.teamcode.utils.RobotConfig.upperRedRect;
 
 
 
@@ -15,7 +15,7 @@ import com.pedropathing.follower.Follower;
 import com.pedropathing.math.Pose;
 
 import org.firstinspires.ftc.teamcode.utils.Rectangle;
-import org.firstinspires.ftc.teamcode.utils.robotConfig;
+import org.firstinspires.ftc.teamcode.utils.RobotConfig;
 
 
 public class ShootingZone {
@@ -26,22 +26,22 @@ public class ShootingZone {
     }
     public ZoneState state;
     Follower follower;
-    robotConfig.Alliance alliance;
+    RobotConfig.Alliance alliance;
     Rectangle lowerRect;
     Rectangle upperRect;
     Pose upperHive;
     Pose lowerHive;
 
-    public ShootingZone(Follower follower, robotConfig.Alliance alliance){
+    public ShootingZone(Follower follower, RobotConfig.Alliance alliance){
         this.alliance = alliance;
         this.follower = follower;
-        if(this.alliance == robotConfig.Alliance.RED){
+        if(this.alliance == RobotConfig.Alliance.RED){
             upperRect = upperRedRect;
             lowerRect = lowerRedRect;
             upperHive = upperRedHiveAim;
             lowerHive = lowerRedHiveAim;
         }
-        else if(this.alliance == robotConfig.Alliance.BLUE){
+        else if(this.alliance == RobotConfig.Alliance.BLUE){
             upperRect = upperBlueRect;
             lowerRect = lowerBlueRect;
             upperHive = upperBlueHiveAim;

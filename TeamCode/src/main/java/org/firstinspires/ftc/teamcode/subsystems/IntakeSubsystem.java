@@ -1,8 +1,8 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
-import static org.firstinspires.ftc.teamcode.utils.robotConfig.intakeLName;
-import static org.firstinspires.ftc.teamcode.utils.robotConfig.intakeMotorEncoderRes;
-import static org.firstinspires.ftc.teamcode.utils.robotConfig.intakeRName;
+import static org.firstinspires.ftc.teamcode.utils.RobotConfig.intakeLName;
+import static org.firstinspires.ftc.teamcode.utils.RobotConfig.intakeMotorEncoderRes;
+import static org.firstinspires.ftc.teamcode.utils.RobotConfig.intakeRName;
 
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;

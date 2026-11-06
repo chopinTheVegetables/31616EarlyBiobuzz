@@ -1,10 +1,10 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
-import static org.firstinspires.ftc.teamcode.utils.robotConfig.counterRollerMotorName;
-import static org.firstinspires.ftc.teamcode.utils.robotConfig.flywheelMotorName;
-import static org.firstinspires.ftc.teamcode.utils.robotConfig.motorToCounterRollerGearRatio;
-import static org.firstinspires.ftc.teamcode.utils.robotConfig.servoMultiplier;
-import static org.firstinspires.ftc.teamcode.utils.robotConfig.turretRotName;
+import static org.firstinspires.ftc.teamcode.utils.RobotConfig.counterRollerMotorName;
+import static org.firstinspires.ftc.teamcode.utils.RobotConfig.flywheelMotorName;
+import static org.firstinspires.ftc.teamcode.utils.RobotConfig.motorToCounterRollerGearRatio;
+import static org.firstinspires.ftc.teamcode.utils.RobotConfig.servoMultiplier;
+import static org.firstinspires.ftc.teamcode.utils.RobotConfig.turretRotName;
 
 import com.bylazar.configurables.annotations.Configurable;
 import com.pedropathing.controllers.Controller;
@@ -16,7 +16,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.utils.robotConfig;
+import org.firstinspires.ftc.teamcode.utils.RobotConfig;
 
 @Configurable
 public class TurretSubsystem {
@@ -44,7 +44,7 @@ public class TurretSubsystem {
             .plus(Controller.proportionalFeedforward(ckV));
 
 
-    public TurretSubsystem(HardwareMap hardwareMap, Follower follower, robotConfig.Alliance alliance){
+    public TurretSubsystem(HardwareMap hardwareMap, Follower follower, RobotConfig.Alliance alliance){
         mainFlywheel = hardwareMap.get(DcMotorEx.class, flywheelMotorName);
         counterRoller = hardwareMap.get(DcMotorEx.class, counterRollerMotorName);
         counterRoller.setDirection(DcMotorSimple.Direction.REVERSE);

@@ -1,17 +1,15 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
-import static org.firstinspires.ftc.teamcode.utils.robotConfig.LLForwardOffset;
-import static org.firstinspires.ftc.teamcode.utils.robotConfig.LLHeight;
-import static org.firstinspires.ftc.teamcode.utils.robotConfig.LLRightOffset;
-import static org.firstinspires.ftc.teamcode.utils.robotConfig.LLname;
-import static org.firstinspires.ftc.teamcode.utils.robotConfig.LLtiltAngle;
+import static org.firstinspires.ftc.teamcode.utils.RobotConfig.LLForwardOffset;
+import static org.firstinspires.ftc.teamcode.utils.RobotConfig.LLHeight;
+import static org.firstinspires.ftc.teamcode.utils.RobotConfig.LLRightOffset;
+import static org.firstinspires.ftc.teamcode.utils.RobotConfig.LLname;
+import static org.firstinspires.ftc.teamcode.utils.RobotConfig.LLtiltAngle;
 
 import com.pedropathing.follower.Follower;
 import com.pedropathing.math.Pose;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-
-import org.opencv.core.Mat;
 
 public class LLdetector {
     private Limelight3A LL;

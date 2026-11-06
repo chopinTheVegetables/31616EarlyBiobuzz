@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.driveTests;
 
+import static org.firstinspires.ftc.teamcode.utils.RobotConfig.allianceKey;
+
 import com.bylazar.configurables.annotations.Configurable;
 import com.pedropathing.follower.Follower;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -8,7 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 import org.firstinspires.ftc.teamcode.subsystems.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.TurretSubsystem;
-import org.firstinspires.ftc.teamcode.utils.robotConfig;
+import org.firstinspires.ftc.teamcode.utils.RobotConfig;
 @Configurable
 @TeleOp
 public class dualFlywheelTest extends OpMode {
@@ -20,7 +22,7 @@ public class dualFlywheelTest extends OpMode {
     public void init() {
         f = Constants.create(hardwareMap);
         intake = new IntakeSubsystem(hardwareMap);
-        turret = new TurretSubsystem(hardwareMap,f, robotConfig.Alliance.RED);
+        turret = new TurretSubsystem(hardwareMap,f, (RobotConfig.Alliance)blackboard.get(allianceKey));
     }
 
     @Override

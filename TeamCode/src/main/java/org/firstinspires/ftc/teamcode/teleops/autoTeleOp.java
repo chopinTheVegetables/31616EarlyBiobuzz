@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.teleops;
 
-import static org.firstinspires.ftc.teamcode.utils.robotConfig.allianceKey;
+import static org.firstinspires.ftc.teamcode.utils.RobotConfig.allianceKey;
 
 import com.pedropathing.drivetrain.DrivePowers;
 import com.pedropathing.follower.Follower;
@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 import org.firstinspires.ftc.teamcode.subsystems.TurretSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.IntakeSubsystem;
-import org.firstinspires.ftc.teamcode.utils.robotConfig;
+import org.firstinspires.ftc.teamcode.utils.RobotConfig;
 
 public class autoTeleOp extends OpMode {
     Follower follower;
@@ -19,7 +19,7 @@ public class autoTeleOp extends OpMode {
     @Override
     public void init() {
         follower = Constants.create(hardwareMap);
-        turret = new TurretSubsystem(hardwareMap,follower, (robotConfig.Alliance) blackboard.get(allianceKey));
+        turret = new TurretSubsystem(hardwareMap,follower, (RobotConfig.Alliance) blackboard.get(allianceKey));
         intake = new IntakeSubsystem(hardwareMap);
     }
 

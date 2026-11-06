@@ -11,17 +11,14 @@ import static org.firstinspires.ftc.teamcode.autos.RedAudienceAuto.AutoState.INI
 import static org.firstinspires.ftc.teamcode.autos.RedAudienceAuto.AutoState.PARK;
 import static org.firstinspires.ftc.teamcode.autos.RedAudienceAuto.AutoState.PICKUP1;
 import static org.firstinspires.ftc.teamcode.autos.RedAudienceAuto.AutoState.ROTATE;
-import static org.firstinspires.ftc.teamcode.utils.robotConfig.allianceKey;
+import static org.firstinspires.ftc.teamcode.utils.RobotConfig.allianceKey;
 
-import com.pedropathing.api.PoseFactory;
-import com.pedropathing.math.Pose;
 import com.pedropathing.paths.Path;
 import com.pedropathing.paths.interpolator.Interpolator;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
-import org.firstinspires.ftc.robotcontroller.external.samples.ConceptBlackboard;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
-import org.firstinspires.ftc.teamcode.utils.robotConfig;
+import org.firstinspires.ftc.teamcode.utils.RobotConfig;
 
 public class RedAudienceAuto extends OpMode {
         public enum AutoState {
@@ -98,7 +95,7 @@ public class RedAudienceAuto extends OpMode {
                 case  PARK:
                     follower.follow(parkPATH());
                     if(!follower.isBusy()){
-                        blackboard.put(allianceKey, robotConfig.Alliance.RED);
+                        blackboard.put(allianceKey, RobotConfig.Alliance.RED);
                         terminateOpModeNow();
                     }
 
