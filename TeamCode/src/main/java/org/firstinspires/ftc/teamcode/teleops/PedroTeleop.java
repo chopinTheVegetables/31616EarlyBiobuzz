@@ -16,7 +16,7 @@ import org.firstinspires.ftc.teamcode.pedro.Constants;
 import org.firstinspires.ftc.teamcode.subsystems.LLdetector;
 
 @TeleOp
-public class pedroTeleop extends OpMode {
+public class PedroTeleop extends OpMode {
     Servo flowerRamp;
 
     double shooterPow = 0;

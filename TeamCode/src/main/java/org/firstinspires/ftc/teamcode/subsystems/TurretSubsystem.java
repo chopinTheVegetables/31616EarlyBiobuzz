@@ -38,6 +38,7 @@ public class TurretSubsystem {
     public static double ckD = 0.0;
 
     private double targetVelocity = 0.0;
+    ///TUNING PIDS REQUIRES THESE PID DECLERATIONS TO BE MOVED TO calculatePowers()
     Controller mainPower = Controller.pid(mkP, mkI, mkD)
             .plus(Controller.proportionalFeedforward(mkV));
     Controller subPower = Controller.pid(ckP, ckI, ckD)
@@ -81,7 +82,6 @@ public class TurretSubsystem {
         double servoPosition = 0.5 + (calculateAimAngle() * servoMultiplier);
         turretRotation.setPosition(Math.max(0.0, Math.min(1.0, servoPosition)));
     }
-
     public void manualAngleSet(double theta) {
         double servoPosition = 0.5 + (theta * servoMultiplier);
         turretRotation.setPosition(Math.max(0.0, Math.min(1.0, servoPosition)));

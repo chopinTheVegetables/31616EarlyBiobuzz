@@ -13,13 +13,13 @@ import org.firstinspires.ftc.teamcode.pedro.Constants;
 import org.firstinspires.ftc.teamcode.subsystems.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.TurretSubsystem;
 import org.firstinspires.ftc.teamcode.utils.RobotConfig;
-@Configurable
+
 @TeleOp
-public class lm1Teleop extends OpMode {
+public class Lm1Teleop extends OpMode {
     IntakeSubsystem intake;
     TurretSubsystem turret;
     Follower f;
-    public static double  mainRPM = 0;
+    private double  mainRPM = 0;
     @Override
     public void init() {
         //pedro pathing follower
