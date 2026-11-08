@@ -8,6 +8,7 @@ import com.pedropathing.follower.Follower;
 import com.pedropathing.follower.ManualDrive;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 import org.firstinspires.ftc.teamcode.subsystems.IntakeSubsystem;
@@ -20,6 +21,10 @@ public class Lm1Teleop extends OpMode {
     TurretSubsystem turret;
     Follower f;
     private double  mainRPM = 0;
+    boolean flowerDeployed = false;
+    Servo flowerRamp;
+    Servo gate;
+
     @Override
     public void init() {
         //pedro pathing follower
@@ -28,6 +33,8 @@ public class Lm1Teleop extends OpMode {
         intake = new IntakeSubsystem(hardwareMap);
         //turret subsystem
         turret = new TurretSubsystem(hardwareMap,f, (RobotConfig.Alliance)blackboard.get(allianceKey));
+        flowerRamp = hardwareMap.get(Servo.class, "flower");
+        gate = hardwareMap.get(Servo.class, "gate");
     }
 
     @Override
@@ -40,12 +47,27 @@ public class Lm1Teleop extends OpMode {
         }else{
             intake.setPower(0);
         }
+        if(gamepad2.aWasReleased()){
+            flowerDeployed =! flowerDeployed;
+        }
+        if(flowerDeployed){
+            flowerRamp.setPosition(0.9);
+        }
+        else if(!flowerDeployed){
+            flowerRamp.setPosition(0.4);
+        }
+        if(gamepad2.x){
+            gate.setPosition(0);
+        }else{
+            gate.setPosition(1);
+        }
         //manual overrides (if no regression)
         if(gamepad2.dpadUpWasReleased()){
-            mainRPM += 200;
+            mainRPM += 100;
         }else if(gamepad2.dpadDownWasReleased()){
-            mainRPM -= 200;
+            mainRPM -= 100;
         }
+
         //field centricDrive
         DrivePowers powers = ManualDrive.fieldCentric(
                 -gamepad1.left_stick_y,
