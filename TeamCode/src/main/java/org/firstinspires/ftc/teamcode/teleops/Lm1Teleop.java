@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.teleops;
 
 import static org.firstinspires.ftc.teamcode.utils.RobotConfig.allianceKey;
 
-import com.bylazar.configurables.annotations.Configurable;
 import com.pedropathing.drivetrain.DrivePowers;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.follower.ManualDrive;
@@ -20,10 +19,11 @@ public class Lm1Teleop extends OpMode {
     IntakeSubsystem intake;
     TurretSubsystem turret;
     Follower f;
-    private double  mainRPM = 0;
+    private double  mainRPM = 2600;
     boolean flowerDeployed = false;
     Servo flowerRamp;
     Servo gate;
+    double gatePos = 0.5;
 
     @Override
     public void init() {
@@ -35,6 +35,7 @@ public class Lm1Teleop extends OpMode {
         turret = new TurretSubsystem(hardwareMap,f, (RobotConfig.Alliance)blackboard.get(allianceKey));
         flowerRamp = hardwareMap.get(Servo.class, "flower");
         gate = hardwareMap.get(Servo.class, "gate");
+        gate.setPosition(0.5);
     }
 
     @Override
@@ -47,7 +48,7 @@ public class Lm1Teleop extends OpMode {
         }else{
             intake.setPower(0);
         }
-        if(gamepad2.aWasReleased()){
+        if(gamepad2.bWasReleased()){
             flowerDeployed =! flowerDeployed;
         }
         if(flowerDeployed){
@@ -56,11 +57,15 @@ public class Lm1Teleop extends OpMode {
         else if(!flowerDeployed){
             flowerRamp.setPosition(0.4);
         }
-        if(gamepad2.x){
-            gate.setPosition(0);
-        }else{
+        if(gamepad2.x) {
             gate.setPosition(1);
+        }else{
+            gate.setPosition(0.5);
         }
+
+        //ball allow flow:
+        //block:
+        //fire last ball:
         //manual overrides (if no regression)
         if(gamepad2.dpadUpWasReleased()){
             mainRPM += 100;
@@ -78,6 +83,7 @@ public class Lm1Teleop extends OpMode {
         f.manual(powers);
         f.update();
         //telemetry
+        telemetry.addData("gaet", gate.getPosition());
         telemetry.addData("main flywheel", turret.getMainFlywheelVelocity());
         telemetry.addData("counterRoller", turret.getCounterRollerVelocity());
         telemetry.addData("target", mainRPM);
