@@ -24,18 +24,20 @@ public class OneTipRed extends OpMode {
     public int state;
     private final PoseFactory poseFactory = PoseFactory.degrees();
 
-    private final Pose start = poseFactory.of(54.8898, 11.8826, 90);
-    private final Pose path1 = poseFactory.of(8.2289, 91.7082, 90);
+    private final Pose start = poseFactory.of(55, 9, 90);
+    private final Pose path1 = poseFactory.of(11, 99, 90);
+    private final Pose path1Control1 = poseFactory.of(29.1645, 32.3055, 0);
 
     public Path path1path() {
-        return Paths.line(start, path1).linear(start, path1);
-
+        return Paths.curve(start, path1Control1, path1).constant(path1);
     }
+
+
     @Override
     public void init() {
-        state = 2;
+        state = 0;
         f = Constants.create(hardwareMap);
-        f.setPose(new Pose(55,9,90));
+        f.setPose(start);
         turret = new TurretSubsystem(hardwareMap, f, RobotConfig.Alliance.RED);
         intake = new IntakeSubsystem(hardwareMap);
         timer = new ElapsedTime();
@@ -46,37 +48,35 @@ public class OneTipRed extends OpMode {
 
     @Override
     public void loop() {
-        turret.setBothFlywheelsEven(2700);
         switch ((state)){
-            /*case 0:
+            case 0:
+                turret.setBothFlywheelsEven(2900);
                 gate.setPosition(0.5);
-                turret.setBothFlywheelsEven(2700);
-                telemetry.addData("speed up", "go");
-                telemetry.update();
-                if(timer.seconds()>6){
+                if(timer.seconds()>2){
                     timer.reset();
                     state = 1;
                     break;
                 }else{
-                    turret.setBothFlywheelsEven(2700);
                     break;
                 }
             case 1:
                 gate.setPosition(1);
-                intake.setPower(0.3);
-                if(timer.seconds() > 4){
+                intake.setPower(0.5);
+                if(timer.seconds() > 3){
                     state = 2;
+                    gate.setPosition(0.5);
                     intake.setPower(0);
                     break;
                 }else{
                     break;
-                }*/
+                }
             case 2:
                 f.follow(path1path());
-                if(timer.seconds() >3.5){
+                state = 3;
+                break;
+            case 3:
+                if(!f.isBusy()){
                     terminateOpModeNow();
-                    break;
-                }else{
                     break;
                 }
         }
