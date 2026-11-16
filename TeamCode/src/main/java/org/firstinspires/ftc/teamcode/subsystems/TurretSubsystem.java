@@ -26,7 +26,7 @@ public class TurretSubsystem {
     Follower follower;
 
     // constants for main flywheel
-    public static double counterRollerConst = 2;
+    public static double counterRollerConst = 1.7;
     public static double mkV = 0.0015; // Default baseline for 6000 RPM motors
     public static double mkP = 0.0005;
     public static double mkI = 0.0;
@@ -59,7 +59,7 @@ public class TurretSubsystem {
         mainFlywheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
         zoneDetector = new ShootingZone(follower, alliance);
-        this.follower = follower;
+        //this.follower = follower;
     }
 
     private double calculateAimAngle() {

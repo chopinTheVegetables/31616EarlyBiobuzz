@@ -1,8 +1,14 @@
 package org.firstinspires.ftc.teamcode.autos;
 
+import static com.pedropathing.ivy.Scheduler.schedule;
+import static com.pedropathing.ivy.groups.Groups.sequential;
+import static com.pedropathing.ivy.pedro.PedroCommands.follow;
+
 import com.pedropathing.api.Paths;
 import com.pedropathing.api.PoseFactory;
 import com.pedropathing.follower.Follower;
+import com.pedropathing.ivy.Command;
+import com.pedropathing.ivy.Scheduler;
 import com.pedropathing.math.Pose;
 import com.pedropathing.paths.Path;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -27,10 +33,10 @@ public class OneTipRed extends OpMode {
     private final Pose start = poseFactory.of(55, 9, 90);
     private final Pose path1 = poseFactory.of(11, 99, 90);
     private final Pose path1Control1 = poseFactory.of(29.1645, 32.3055, 0);
-
-    public Path path1path() {
+    private Path path1path() {
         return Paths.curve(start, path1Control1, path1).constant(path1);
     }
+
 
 
     @Override
@@ -50,7 +56,7 @@ public class OneTipRed extends OpMode {
     public void loop() {
         switch ((state)){
             case 0:
-                turret.setBothFlywheelsEven(2900);
+                turret.setBothFlywheelsEven(3000);
                 gate.setPosition(0.5);
                 if(timer.seconds()>2){
                     timer.reset();
@@ -61,8 +67,8 @@ public class OneTipRed extends OpMode {
                 }
             case 1:
                 gate.setPosition(1);
-                intake.setPower(0.5);
-                if(timer.seconds() > 3){
+                intake.setPower(0.45);
+                if(timer.seconds() > 4){
                     state = 2;
                     gate.setPosition(0.5);
                     intake.setPower(0);
@@ -71,14 +77,10 @@ public class OneTipRed extends OpMode {
                     break;
                 }
             case 2:
-                f.follow(path1path());
+                terminateOpModeNow();
                 state = 3;
                 break;
-            case 3:
-                if(!f.isBusy()){
-                    terminateOpModeNow();
-                    break;
-                }
+
         }
         f.update();
         turret.calculatePowers();

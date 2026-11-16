@@ -15,7 +15,7 @@ import org.firstinspires.ftc.teamcode.subsystems.TurretSubsystem;
 import org.firstinspires.ftc.teamcode.utils.RobotConfig;
 
 @TeleOp
-public class Lm1Teleop extends OpMode {
+public class Lm1TeleopBLUE extends OpMode {
     IntakeSubsystem intake;
     TurretSubsystem turret;
     Follower f;
@@ -75,8 +75,8 @@ public class Lm1Teleop extends OpMode {
 
         //field centricDrive
         DrivePowers powers = ManualDrive.fieldCentric(
-                -gamepad1.left_stick_y,
-                -gamepad1.left_stick_x,
+                gamepad1.left_stick_y,
+                gamepad1.left_stick_x,
                 -gamepad1.right_stick_x,
                 f.pose().heading()
         );
