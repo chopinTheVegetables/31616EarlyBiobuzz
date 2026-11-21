@@ -50,7 +50,7 @@ public class RobotConfig {
         RED, BLUE
     }
     public static final String allianceKey = "allianceRedOrBlue";
-
+    public static final String gateServoName = "gate";
 
 
 
