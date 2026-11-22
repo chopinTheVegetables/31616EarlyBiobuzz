@@ -16,11 +16,12 @@ public class turretTest extends OpMode {
     int angle = 0;
     IntakeSubsystem intake;
     int speed = 0;
+    boolean shootingON = true;
 
     @Override
     public void init() {
          f = Constants.create(hardwareMap);
-         f.setPose(new Pose(54, 9, Math.toRadians(90)));
+         f.setPose(new Pose(54, 9, Math.toRadians(0)));
          turret = new TurretSubsystem(hardwareMap, f, RobotConfig.Alliance.RED);
          intake = new IntakeSubsystem(hardwareMap);
     }
@@ -45,16 +46,27 @@ public class turretTest extends OpMode {
         }else if(gamepad1.dpadLeftWasReleased()){
            speed -= 100;
         }
-        telemetry.addData("gtc", turret.calculateAimAngle());
+
+        telemetry.addData("robot target angle", turret.calculateAimAngle());
+        telemetry.addData("field target angle", turret.getFieldAngle());
+        telemetry.addData("x", f.pose().x());
+        telemetry.addData("y", f.pose().y());
         telemetry.addData("heading", Math.toDegrees(f.pose().heading()));
         telemetry.addData("aimstate", turret.getAimState());
         telemetry.addData("dist", turret.getDist());
         telemetry.addData("rpm target", turret.getRPMtarget());
         telemetry.addData("rpm", turret.getMainFlywheelVelocity());
         telemetry.addData("cr", turret.getCounterRollerVelocity());
-
+        if(gamepad1.yWasReleased()){
+            shootingON = !shootingON;
+        }
         turret.autoAimTurretNoSOTM();
-        turret.setFlywheelsUsingRegression();
+        if(shootingON){
+            turret.setFlywheelsUsingRegression();
+        }
+        else{
+            turret.setBothFlywheelsEven(0);
+        }
         turret.calculatePowers();
         telemetry.update();
         f.update();

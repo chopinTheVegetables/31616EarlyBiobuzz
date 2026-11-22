@@ -25,8 +25,6 @@ public class RobotConfig {
     public static final double LLHeight = 10;
     public static final double LLForwardOffset = -1;
     public static final double LLRightOffset = 0;
-    //LL
-
     //for shooting automation: shooting zones
     ///RED
     public static Rectangle upperRedRect = new Rectangle(new Pose(0,78), new Pose(0,144),

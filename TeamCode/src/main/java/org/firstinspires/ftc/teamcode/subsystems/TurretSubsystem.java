@@ -72,7 +72,19 @@ public class TurretSubsystem {
         Pose currentPose = follower.pose();
         Pose targetPose = zoneDetector.hiveAimingTargetBasedOnZones();
         double globalTargetAngle = Math.toDegrees(Math.atan2(targetPose.y() - currentPose.y(), targetPose.x() - currentPose.x()));
-        return globalTargetAngle- Math.toDegrees(currentPose.heading());
+        return wrapDegrees(globalTargetAngle- Math.toDegrees(currentPose.heading()));
+    }
+    public static double wrapDegrees(double degrees) {
+        degrees = (degrees + 180.0) % 360.0;
+        if (degrees < 0) {
+            degrees += 360.0;
+        }
+        return degrees - 180.0;
+    }
+    public double getFieldAngle(){
+        Pose currentPose = follower.pose();
+        Pose targetPose = zoneDetector.hiveAimingTargetBasedOnZones();
+        return Math.toDegrees(Math.atan2(targetPose.y() - currentPose.y(), targetPose.x() - currentPose.x()));
     }
 
     public double getRPMtarget(){
@@ -99,7 +111,6 @@ public class TurretSubsystem {
     public void manualAngleSet(double theta) {
             double servoPosition = 0.5 + (theta * servoMultiplier);
             turretRotation.setPosition(Math.max(0.0, Math.min(1.0, servoPosition)));
-
     }
     public void setBothFlywheelsEven(double mainFlywheelSpeed){ this.targetVelocity = mainFlywheelSpeed; }
 
