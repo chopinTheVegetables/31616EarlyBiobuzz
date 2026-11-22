@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.subsystems;
 
 import static org.firstinspires.ftc.teamcode.utils.RobotConfig.counterRollerMotorName;
 import static org.firstinspires.ftc.teamcode.utils.RobotConfig.flywheelMotorName;
+import static org.firstinspires.ftc.teamcode.utils.RobotConfig.lowerRedHiveAim;
 import static org.firstinspires.ftc.teamcode.utils.RobotConfig.motorToCounterRollerGearRatio;
 import static org.firstinspires.ftc.teamcode.utils.RobotConfig.servoMultiplier;
 import static org.firstinspires.ftc.teamcode.utils.RobotConfig.turretRotName;
@@ -16,7 +17,9 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.utils.RegressionTable;
 import org.firstinspires.ftc.teamcode.utils.RobotConfig;
+import org.opencv.core.Mat;
 
 @Configurable
 public class TurretSubsystem {
@@ -51,40 +54,52 @@ public class TurretSubsystem {
         counterRoller.setDirection(DcMotorSimple.Direction.REVERSE);
 
         turretRotation = hardwareMap.get(Servo.class, turretRotName);
+        turretRotation.setDirection(Servo.Direction.REVERSE);
 
         mainFlywheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         counterRoller.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         counterRoller.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         mainFlywheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-
+        this.follower = follower;
+        turretRotation.setPosition(0.5);
         zoneDetector = new ShootingZone(follower, alliance);
         //this.follower = follower;
+
     }
 
-    private double calculateAimAngle() {
+    public double calculateAimAngle() {
         Pose currentPose = follower.pose();
         Pose targetPose = zoneDetector.hiveAimingTargetBasedOnZones();
-
-        // Calculate global angle to target in degrees
         double globalTargetAngle = Math.toDegrees(Math.atan2(targetPose.y() - currentPose.y(), targetPose.x() - currentPose.x()));
-
-        // Convert current robot heading from radians to degrees
-        double robotHeadingDegrees = Math.toDegrees(currentPose.heading());
-
-        // Return relative target angle to robot heading so we can actually set the position
-        return globalTargetAngle - robotHeadingDegrees;
+        return globalTargetAngle- Math.toDegrees(currentPose.heading());
     }
 
-
+    public double getRPMtarget(){
+        return targetVelocity;
+    }
+    public void setFlywheelsUsingRegression(){
+        setBothFlywheelsEven(RegressionTable.getTarget(getDist()));
+    }
     // Centers the calculation at the 0.5 servo midpoint position
     public void autoAimTurretNoSOTM() {
-        double servoPosition = 0.5 + (calculateAimAngle() * servoMultiplier);
-        turretRotation.setPosition(Math.max(0.0, Math.min(1.0, servoPosition)));
+            double servoPosition = 0.5 + (calculateAimAngle() * servoMultiplier);
+            turretRotation.setPosition(Math.max(0.0, Math.min(1.0, servoPosition)));
+    }
+    public double getDist(){
+        Pose currentPose = follower.pose();
+        if(getAimState() == ShootingZone.ZoneState.AimingAtLowHive){
+            return Math.hypot(zoneDetector.lowerHive.x() - currentPose.x(), (zoneDetector.lowerHive.y()- currentPose.y()));
+        }if(getAimState() == ShootingZone.ZoneState.AimingAtHighHive){
+            return Math.hypot(zoneDetector.upperHive.x() - currentPose.x(), (zoneDetector.upperHive.y()- currentPose.y()));
+        }else{
+            return 0;
+        }
     }
     public void manualAngleSet(double theta) {
-        double servoPosition = 0.5 + (theta * servoMultiplier);
-        turretRotation.setPosition(Math.max(0.0, Math.min(1.0, servoPosition)));
+            double servoPosition = 0.5 + (theta * servoMultiplier);
+            turretRotation.setPosition(Math.max(0.0, Math.min(1.0, servoPosition)));
+
     }
     public void setBothFlywheelsEven(double mainFlywheelSpeed){ this.targetVelocity = mainFlywheelSpeed; }
 
@@ -108,5 +123,9 @@ public class TurretSubsystem {
         //clippingx
         mainFlywheel.setPower(Math.max(0, Math.min(1, mainPow)));
         counterRoller.setPower(Math.max(0, Math.min(1, subPow)));
+    }
+    public ShootingZone.ZoneState getAimState(){
+        zoneDetector.hiveAimingTargetBasedOnZones();
+        return zoneDetector.getTarget();
     }
 }

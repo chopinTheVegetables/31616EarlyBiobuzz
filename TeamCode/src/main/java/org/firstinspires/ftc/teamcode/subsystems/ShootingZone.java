@@ -75,6 +75,9 @@ public class ShootingZone {
             return new Pose(72,72);
         }
     }
+    public ZoneState getTarget(){
+        return state;
+    }
 
 
 }

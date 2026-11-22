@@ -5,6 +5,7 @@ import static org.firstinspires.ftc.teamcode.utils.RobotConfig.allianceKey;
 import com.pedropathing.drivetrain.DrivePowers;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.follower.ManualDrive;
+import com.pedropathing.math.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -24,7 +25,7 @@ public class XanderTeleOp extends OpMode {
     Servo flowerRamp;
     Servo gate;
     double gatePos = 0.5;
-
+    Pose holdPose;
     @Override
     public void init() {
         //pedro pathing follower
@@ -72,15 +73,18 @@ public class XanderTeleOp extends OpMode {
         }else if(gamepad1.dpadDownWasReleased()){
             mainRPM -= 100;
         }
+        turret.autoAimTurretNoSOTM();
 
-        //field centricDrive
-        f.manual(-gamepad1.left_stick_y, -gamepad1.left_stick_x, -gamepad1.right_stick_x);
+        ManualDrive.driveOrHold(f, -gamepad1.left_stick_y, -gamepad1.left_stick_x, -gamepad1.right_stick_x);
         f.update();
         //telemetry
         telemetry.addData("gaet", gate.getPosition());
         telemetry.addData("main flywheel", turret.getMainFlywheelVelocity());
         telemetry.addData("counterRoller", turret.getCounterRollerVelocity());
         telemetry.addData("target", mainRPM);
+        telemetry.addData("dist", turret.getDist());
+
+
         telemetry.update();
         //setting powers to the flywheels
         turret.setBothFlywheelsEven(mainRPM);
